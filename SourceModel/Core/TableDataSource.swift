@@ -28,11 +28,11 @@ import StanwoodCore
 
 protocol TableDataSourcing {
     
-    var dataType: DataType? {get set}
-    var type: Type? { get set }
+    var dataType: ModelCollection? {get set}
+    var type: Model? { get set }
     
-    func update(with dataType: DataType?)
-    func update(with dataType: Type?)
+    func update(modelCollection: ModelCollection?)
+    func update(model: Model?)
     
     func numberOfSections(in tableView: UITableView) -> Int
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -71,14 +71,10 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
     // MARK: Properties
     
     /// dataType, a collection of types
-    public internal(set) var dataType: DataType?
+    public internal(set) var dataType: ModelCollection?
     
     /// A single type object to present
-    public internal(set) var type: Type?
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "dataType")
-    public internal(set) var dataObject: DataType?
+    public internal(set) var type: Model?
     
     /// :nodoc:
     private weak var delegate: AnyObject?
@@ -94,14 +90,10 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
      
      - SeeAlso: `DataType`
      */
-    public init(dataType: DataType?, delegate: AnyObject? = nil) {
+    public init(dataType: ModelCollection?, delegate: AnyObject? = nil) {
         self.dataType = dataType
         self.delegate = delegate
     }
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "init(dataType:)")
-    public init(dataObject: DataType?) {}
     
     /**
      Initialise with a a single type object.
@@ -111,9 +103,13 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
      
      - SeeAlso: `Type`
      */
-    public init(type: Type) {
-        self.type = type
+    public init(model: Model) {
+        self.type = model
     }
+    
+    /// Unavalible
+    @available(*, unavailable, renamed: "init(model:)")
+    public init(type: Type) {}
     
     /// Unavalible
     @available(*, unavailable, renamed: "init(type:)")
@@ -130,9 +126,13 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
      
      - SeeAlso: `Type`
      */
-    open func update(with dataType: DataType?) {
-        self.dataType = dataType
+    open func update(modelCollection: ModelCollection?) {
+        self.dataType = modelCollection
     }
+    
+    /// Unavalible
+    @available(*, unavailable, renamed: "update(modelCollection:)")
+    open func update(with dataType: DataType?) {}
     
     /**
      update current dataSource with dataType.
@@ -143,9 +143,13 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
      
      - SeeAlso: `DataType`
      */
-    open func update(with type: Type?) {
-        self.type = type
+    open func update(model: Model?) {
+        self.type = model
     }
+    
+    /// Unavalible
+    @available(*, unavailable, renamed: "update(modelCollection:)")
+    open func update(with type: Type?) {}
     
     // MARK: UITableViewDataSource functions
     

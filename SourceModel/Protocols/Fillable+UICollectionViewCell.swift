@@ -52,6 +52,6 @@ public protocol Fillable where Self: ForceFillable {
      - Parameters:
         - type: the element type
      */
-    func fill(with type: Type?)
+    func fill(with type: Model?)
 }
 

@@ -28,11 +28,11 @@ import StanwoodCore
 
 protocol CollectionDataSourcing: class {
     
-    var dataType: DataType? { get set }
-    var type: Type? { get set }
+    var dataType: ModelCollection? { get set }
+    var type: Model? { get set }
     
-    func update(with dataType: DataType?)
-    func update(with type: Type?)
+    func update(modelCollection: ModelCollection?)
+    func update(model: Model?)
     
     func numberOfSections(in collectionView: UICollectionView) -> Int
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
@@ -71,14 +71,10 @@ open class CollectionDataSource: NSObject, UICollectionViewDataSource, Collectio
     // MARK: Properties
     
     /// dataObject, a collection of types
-    public internal(set) var dataType:DataType?
+    public internal(set) var dataType: ModelCollection?
     
     /// A single type object to present
-    public internal(set) var type: Type?
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "dataType")
-    public internal(set) var dataObject: DataType?
+    public internal(set) var type: Model?
     
     /// :nodoc:
     private weak var delegate: AnyObject?
@@ -94,14 +90,10 @@ open class CollectionDataSource: NSObject, UICollectionViewDataSource, Collectio
      
      - SeeAlso: `DataType`
      */
-    public init(dataType: DataType?, delegate: AnyObject? = nil) {
+    public init(dataType: ModelCollection?, delegate: AnyObject? = nil) {
         self.delegate = delegate
         self.dataType = dataType
     }
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "init(dataType:)")
-    public init(dataObject: DataType?) {}
     
     /**
      Initialise with a a single type object.
@@ -111,7 +103,7 @@ open class CollectionDataSource: NSObject, UICollectionViewDataSource, Collectio
      
      - SeeAlso: `Type`
      */
-    public init(type: Type, delegate: AnyObject? = nil) {
+    public init(type: Model, delegate: AnyObject? = nil) {
         self.type = type
     }
     
@@ -128,9 +120,13 @@ open class CollectionDataSource: NSObject, UICollectionViewDataSource, Collectio
      
      - SeeAlso: `Type`
      */
-    open func update(with dataType: DataType?) {
+    open func update(modelCollection dataType: ModelCollection?) {
         self.dataType = dataType
     }
+    
+    /// Unavalible
+    @available(*, unavailable, renamed: "update(modelCollection:)")
+    open func update(with dataType: ModelCollection?) {}
     
     /**
      update current dataSource with type.
@@ -141,9 +137,13 @@ open class CollectionDataSource: NSObject, UICollectionViewDataSource, Collectio
      
      - SeeAlso: `DataType`
      */
-    open func update(with type: Type?) {
+    open func update(model type: Model?) {
         self.type = type
     }
+    
+    /// Unavalible
+    @available(*, unavailable, renamed: "update(model:)")
+    open func update(with type: Type?) {}
     
     // MARK: UICollectionViewDataSource functions
     

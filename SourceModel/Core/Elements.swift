@@ -24,9 +24,10 @@
 //  THE SOFTWARE.
 
 import Foundation
+import StanwoodCore
 
 /// Type, Equatable & Codeable
-public typealias Typeable = Type & Equatable
+public typealias Typeable = Model & Equatable
 
 
 /// Unavalible
@@ -59,7 +60,7 @@ open class Objects<T: Typeable>: Codable {}
  
  `Typeable`
  */
-open class Elements<Element: Typeable>: DataType, Codable where Element: Codable {
+open class Elements<Element: Typeable>: ModelCollection, Codable where Element: Codable {
     
     enum Errors: Error {
         case typeableDoNotConformToCodable
@@ -116,7 +117,7 @@ open class Elements<Element: Typeable>: DataType, Codable where Element: Codable
      
      - SeeAlso: `Type`
      */
-    open subscript(indexPath: IndexPath) -> Type? {
+    open subscript(indexPath: IndexPath) -> Model? {
         guard indexPath.row < items.count else { return nil }
         return items[indexPath.row]
     }
@@ -128,7 +129,7 @@ open class Elements<Element: Typeable>: DataType, Codable where Element: Codable
      
      - SeeAlso: `DataType`
      */
-    open subscript(section: Int) -> DataType {
+    open subscript(section: Int) -> ModelCollection {
         return self
     }
     
@@ -213,35 +214,34 @@ open class Elements<Element: Typeable>: DataType, Codable where Element: Codable
     public func contains(_ item: Element) -> Bool {
         return items.contains(item)
     }
-    /*
-     // MARK: Persist Data
-     
-     /**
+    
+    // MARK: Persist Data
+    
+    /**
      Save objects to file
      
      - Parameters:
-     - fileName: The file name. If nil, default value String(describing: Elements<Element>.self)`
-     - directory: The directory to save the file.
+        - fileName: The file name. If nil, default value String(describing: Elements<Element>.self)`
+        - directory: The directory to save the file.
      */
-     open func save(withFileName fileName: String? = nil, directory: Storage.Directory = .documents(customDirectory: nil)) throws {
-     
-     try Storage.store(self, to: directory, as: .json, withName: fileName ?? Elements<Element>.identifier)
-     }
-     
-     /**
+    open func save(withFileName fileName: String? = nil, directory: Stanwood.Storage.Directory = .documents) throws {
+        
+        try Stanwood.Storage.store(self, to: directory, as: .json, withName: fileName ?? Elements<Element>.identifier)
+    }
+    
+    /**
      Returns objects from file if exists
      
      - Parameters:
-     - fileName: The file name. If nil, default value String(describing: Elements<T>.self)`
-     - directory: The directory to save the file. 
+        - fileName: The file name. If nil, default value String(describing: Elements<T>.self)`
+        - directory: The directory to save the file.
      */
-     open static func loadFromFile(withFileName fileName: String? = nil, directory: Storage.Directory = .documents(customDirectory: nil)) -> Elements? {
-     do {
-     return try Stanwood.Storage.retrieve(fileName ?? Elements<Element>.identifier, of: .json, from: directory, as: Elements<Element>.self)
-     } catch {
-     return nil
-     }
-     }
-     */
+    public static func loadFromFile(withFileName fileName: String? = nil, directory: Stanwood.Storage.Directory = Stanwood.Storage.Directory.documents) -> Elements? {
+        do {
+            return try Stanwood.Storage.retrieve(fileName ?? Elements<Element>.identifier, of: .json, from: directory, as: Elements<Element>.self)
+        } catch {
+            return nil
+        }
+    }
 }
 

@@ -27,7 +27,7 @@ import Foundation
 
 
 /**
- Sections holds an array of DataTypes.
+ Sections holds an array of ModelCollections.
  
  #####Example: DataSource and Delegate design#####
  
@@ -49,18 +49,18 @@ import Foundation
  
  - SeeAlso:
  
- `DataType`
+ `ModelCollection`
  
- `Type`
+ `Model`
  
- `Typeable`
+ `Modelable`
  */
-open class Sections: DataType {
+open class Sections: ModelCollection {
     
     // MARK: Properties
     
-    /// Items of DataType
-    public typealias Section = DataType & Codable
+    /// Items of ModelCollection
+    public typealias Section = ModelCollection & Codable
     public var sections: [Section]
     
     // MARK Computet Properties
@@ -75,7 +75,7 @@ open class Sections: DataType {
      
      - Returns: current section
      
-     - SeeAlso: `DataType` for multiple section option
+     - SeeAlso: `ModelCollection` for multiple section option
      */
     open var numberOfSections: Int {
         return sections.count
@@ -87,7 +87,7 @@ open class Sections: DataType {
      Initializer of Sections
      
      - Parameters:
-     - items: `[Section]<Type & Equatable & Codable>`
+     - items: `[Section]<Model & Equatable & Codable>`
      */
     public init(items: [Section]) {
         self.sections = items
@@ -101,28 +101,28 @@ open class Sections: DataType {
      - Parameters:
      - indexPath: IndexPath location of an item at row
      
-     - Returns: `Optional<Type>`
+     - Returns: `Optional<Model>`
      
-     - SeeAlso: `Type`
+     - SeeAlso: `Model`
      */
-    open subscript(indexPath: IndexPath) -> Type? {
+    open subscript(indexPath: IndexPath) -> Model? {
         return self[indexPath.section][indexPath]
     }
     
     /**
      Subscript to get a section.
      
-     >Important: `Sections` only supports a single section dataType. For a more complex solution, please conform to the `DataType` protocol.
+     >Important: `Sections` only supports a single section ModelCollection. For a more complex solution, please conform to the `ModelCollection` protocol.
      
-     - SeeAlso: `DataType`
+     - SeeAlso: `ModelCollection`
      */
-    open subscript(section: Int) -> DataType {
+    open subscript(section: Int) -> ModelCollection {
         return sections[section]
     }
     
     // MARK: Public Functions
     
-    /// Returns the cell type at indexPath
+    /// Returns the cell Model at indexPath
     open func cellType(forItemAt indexPath: IndexPath) -> Fillable.Type? {
         return sections[indexPath.section].cellType(forItemAt: indexPath)
     }

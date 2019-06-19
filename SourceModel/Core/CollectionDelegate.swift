@@ -28,11 +28,11 @@ import UIKit
 
 protocol CollectionDelegating {
     
-    var dataType: DataType? { get set }
-    var type: Type? { get set }
+    var dataType: ModelCollection? { get set }
+    var type: Model? { get set }
     
-    func update(with dataType: DataType?)
-    func update(with type: Type?)
+    func update(modelCollection: ModelCollection?)
+    func update(model: Model?)
 }
 
 /**
@@ -56,7 +56,7 @@ protocol CollectionDelegating {
  
  `Objects`
  
- `DataType`
+ `ModelCollection`
  
  `Type`
  */
@@ -65,14 +65,10 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
     // MARK: Properties
     
     /// dataObject, a collection of types
-    public internal(set) var dataType:DataType?
+    public internal(set) var dataType:ModelCollection?
     
     /// A single type object to present
-    public internal(set) var type: Type?
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "dataType")
-    public internal(set) var dataObject: DataType?
+    public internal(set) var type: Model?
     
     // MARK: Initializers
     
@@ -82,15 +78,15 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
      - Parameters:
      - dataObject: dataObject
      
-     - SeeAlso: `DataType`
+     - SeeAlso: `ModelCollection`
      */
-    public init(dataType: DataType?) {
-        self.dataType = dataType
+    public init(modelCollection: ModelCollection?) {
+        self.dataType = modelCollection
     }
     
     /// Unavalible
-    @available(*, unavailable, renamed: "init(dataType:)")
-    public init(dataObject: DataType?) {}
+    @available(*, unavailable, renamed: "init(model:)")
+    public init(dataType: DataType?) {}
     
     /**
      Initialise with a a single type object.
@@ -100,13 +96,17 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
      
      - SeeAlso: `Type`
      */
-    public init(type: Type) {
-        self.type = type
+    public init(model: Model) {
+        self.type = model
     }
     
     /// Unavalible
+    @available(*, unavailable, renamed: "init(model:)")
+    public init(type: Type) {}
+    
+    /// Unavalible
     @available(*, unavailable, renamed: "init(type:)")
-    public init(dataType: Type) {}
+    public init(dataType: Model) {}
     
     // MARK: Public functions
     
@@ -119,9 +119,13 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
      
      - SeeAlso: `Type`
      */
-    open func update(with dataType: DataType?) {
-        self.dataType = dataType
+    open func update(modelCollection: ModelCollection?) {
+        self.dataType = modelCollection
     }
+    
+    /// Unavalible
+    @available(*, unavailable, renamed: "update(modelCollection:)")
+    open func update(with dataType: DataType?) {}
     
     /**
      update current dataSource with dataType.
@@ -132,9 +136,13 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
      
      - SeeAlso: `DataType`
      */
-    open func update(with type: Type?) {
-        self.type = type
+    open func update(model: Model?) {
+        self.type = model
     }
+    
+    /// Unavalible
+    @available(*, unavailable, renamed: "update(model:)")
+    open func update(with type: Type?) {}
     
     /// :nodoc:
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

@@ -31,7 +31,7 @@ import Foundation
  - SeeAlso:
     `DataType`
  */
-public protocol Type {}
+public protocol Model {}
 
 /**
  DataType is an object that stores a collection of types.
@@ -39,7 +39,7 @@ public protocol Type {}
  - SeeAlso:
     `Type`
  */
-public protocol DataType {
+public protocol ModelCollection {
     
     /// Returns the number of items
     var numberOfItems: Int { get }
@@ -48,11 +48,19 @@ public protocol DataType {
     var numberOfSections: Int { get }
     
     /// A subscript to return a type in an indexPath
-    subscript(indexPath: IndexPath) -> Type? { get }
+    subscript(indexPath: IndexPath) -> Model? { get }
     
     /// A subscript to return a collection dataType within a section
-    subscript(section: Int) -> DataType { get }
+    subscript(section: Int) -> ModelCollection { get }
     
     /// Returns the cell type at indexPath
     func cellType(forItemAt indexPath: IndexPath) -> Fillable.Type?
 }
+
+/// Unavalible
+//@available(*, unavailable, renamed: "Model")
+public protocol Type {}
+
+/// Unavalible
+//@available(*, unavailable, renamed: "ModelCollection")
+public protocol DataType {}
