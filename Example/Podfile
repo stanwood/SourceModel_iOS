@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'SourceModel_Example' do
+  pod 'SourceModel', :path => '../'
+
+  target 'SourceModel_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
