@@ -1,5 +1,5 @@
 PODS:
-  - SourceModel (0.1.0)
+  - SourceModel (1.0)
 
 DEPENDENCIES:
   - SourceModel (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  SourceModel: b37495257916b8ab9c93889daa32d9fa919c86b7
+  SourceModel: 34c549cf1430312440ba48aa96d4567fa257c63b
 
 PODFILE CHECKSUM: 310a7ff5c82f0eca5a10fc355efc40903ee33c69
 
