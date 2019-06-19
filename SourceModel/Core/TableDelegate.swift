@@ -27,11 +27,11 @@ import UIKit
 
 protocol TableDelegating {
     
-    var dataType: DataType? { get set }
-    var type: Type?{ get set }
+    var dataType: ModelCollection? { get set }
+    var type: Model? { get set }
     
-    func update(with dataType: DataType?)
-    func update(with type: Type?)
+    func update(modelCollection: ModelCollection?)
+    func update(model: Model?)
 }
 
 
@@ -65,15 +65,11 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
     // MARK: Properties
     
     /// dataType, a collection of types
-    public internal(set) var dataType: DataType?
+    public internal(set) var dataType: ModelCollection?
     
     /// A single type object to present
-    public internal(set) var type: Type?
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "dataType")
-    public internal(set) var dataObject: DataType?
-    
+    public internal(set) var type: Model?
+
     // MARK: Initializers
     
     /**
@@ -84,13 +80,13 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
      
      - SeeAlso: `DataType`
      */
-    public init(dataType: DataType?) {
-        self.dataType = dataType
+    public init(modelCollection: ModelCollection?) {
+        self.dataType = modelCollection
     }
     
     /// Unavalible
-    @available(*, unavailable, renamed: "init(dataType:)")
-    public init(dataObject: DataType?) {}
+    @available(*, unavailable, renamed: "init(modelCollection:)")
+    public init(dataType: DataType?) {}
     
     /**
      Initialise with a a single type object.
@@ -100,13 +96,13 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
      
      - SeeAlso: `Type`
      */
-    public init(type: Type) {
-        self.type = type
+    public init(model: Model) {
+        self.type = model
     }
     
     /// Unavalible
-    @available(*, unavailable, renamed: "init(type:)")
-    public init(dataType: Type) {}
+    @available(*, unavailable, renamed: "init(model:)")
+    public init(type: Type) {}
     
     // MARK: Public functions
     
@@ -119,9 +115,12 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
      
      - SeeAlso: `Type`
      */
-    open func update(with dataType: DataType?) {
-        self.dataType = dataType
+    open func update(modelCollection: ModelCollection?) {
+        self.dataType = modelCollection
     }
+    
+    @available(*, unavailable, renamed: "update(modelCollection:)")
+    open func update(with dataType: DataType?) {}
     
     /**
      update current dataSource with dataType.
@@ -132,9 +131,12 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
      
      - SeeAlso: `DataType`
      */
-    open func update(with type: Type?) {
-        self.type = type
+    open func update(model: Model?) {
+        self.type = model
     }
+    
+    @available(*, unavailable, renamed: "update(model:)")
+    open func update(with type: Type?) {}
     
     /// :nodoc:
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
