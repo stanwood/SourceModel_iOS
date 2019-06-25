@@ -118,8 +118,8 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
     // MARK: Public functions
     
     /**
-     update current dataSource with modelCollection.
-     >Note: If data type is a `class`, it is not required to update the modelCollection.
+     Update current dataSource with modelCollection.
+     >Note: If modelCollection is a `class`, it is not required to update the modelCollection.
      
      - Parameters:
         - modelCollection: ModelCollection

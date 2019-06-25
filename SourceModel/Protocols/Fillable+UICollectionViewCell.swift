@@ -36,13 +36,13 @@ extension UITableViewCell: ForceFillable {}
  
  ##### Example: Fillable example #####
  ````swift
- cell.fill(with: type)
+ cell.fill(with: model)
  ````
  
  - SeeAlso:
  
- `Type`
- `DataType`
+ `Model`
+ `ModelCollection`
  */
 public protocol Fillable where Self: ForceFillable {
     
@@ -50,8 +50,8 @@ public protocol Fillable where Self: ForceFillable {
      Fill current cell with element
      
      - Parameters:
-        - type: the element type
+        - model: the element model
      */
-    func fill(with type: Model?)
+    func fill(with model: Model?)
 }
 

@@ -122,7 +122,6 @@ open class CollectionDataSource: NSObject, UICollectionViewDataSource, Collectio
      
      >Note: If modelCollection is a `class`, it is not required to update the modelCollection.
      
-     >Hi:
      - Parameters:
         - modelCollection: `ModelCollection`
      
