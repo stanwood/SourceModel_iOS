@@ -3,7 +3,7 @@
 //
 //  The MIT License (MIT)
 //
-//  Copyright (c) 2018 Stanwood GmbH (www.stanwood.io)
+//  Copyright (c) 2019 Stanwood GmbH (www.stanwood.io)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,8 @@ import StanwoodCore
 
 protocol TableDataSourcing {
     
-    var dataType: ModelCollection? {get set}
-    var type: Model? { get set }
+    var modelCollection: ModelCollection? {get set}
+    var model: Model? { get set }
     
     func update(modelCollection: ModelCollection?)
     func update(model: Model?)
@@ -40,41 +40,41 @@ protocol TableDataSourcing {
 }
 
 /**
- The `TableDataSource` conforms to the `TableDataSourcing` protocol and implements `TableDataSource.numberOfSections(in:)` and `TableDataSource.tableView(_:numberOfRowsInSection:)`. It midiates the application data model `DataType` and `Type` for the [`UITableView`](https://developer.apple.com/documentation/uikit/uitableview).
+ The `TableDataSource` conforms to the `TableDataSourcing` protocol and implements `TableDataSource.numberOfSections(in:)` and `TableDataSource.tableView(_:numberOfRowsInSection:)`. It midiates the application data model `ModelCollection` and `Model` for the [`UITableView`](https://developer.apple.com/documentation/uikit/uitableview).
  
  >It is requried to subclass `TableDataSource` and override `TableDataSource.tableView(_:cellForRowAt:)`
  
  #####Example: DataSource and Delegate design#####
  ````swift
- let items = [Element(id: "1"), Element(id: "2")]
- self.objects = Stanwood.Elements<Element>(items: items)
+ let items = [Model(id: "1"), Model(id: "2")]
+ let modelCollection = Stanwood.Elements<Model>(items: items)
  
- self.dataSource = ElementDataSource(dataType: objects)
- self.delegate = ElementDelegate(dataType: objects)
+ let dataSource = ModelDataSource(dataObject: modelCollection)
+ let delegate = ModelDelegate(dataObject: modelCollection)
  
- self.tableView.dataSource = self.dataSource
- self.tableView.delegate = self.delegate
- ````
+ self.tableView.dataSource = dataSource
+ self.tableView.delegate = delegate
+ ```
  
  - SeeAlso:
  
  `CollectionDelegate`
  
- `Objects`
+ `Elements`
  
- `DataType`
+ `ModelCollection`
  
- `Type`
+ `Model`
  */
 open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, DataSourceType {
     
     // MARK: Properties
     
-    /// dataType, a collection of types
-    public internal(set) var dataType: ModelCollection?
+    /// modelCollection, a collection of models
+    public internal(set) var modelCollection: ModelCollection?
     
-    /// A single type object to present
-    public internal(set) var type: Model?
+    /// A single model object to present
+    public internal(set) var model: Model?
     
     /// :nodoc:
     private weak var delegate: AnyObject?
@@ -85,13 +85,13 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
      Initialise with a collection of types
      
      - Parameters:
-     - dataType: dataType
-     - delegate: Optional AnyObject delegate
+         - modelCollection: ModelCollection
+         - delegate: Optional AnyObject delegate
      
      - SeeAlso: `DataType`
      */
-    public init(dataType: ModelCollection?, delegate: AnyObject? = nil) {
-        self.dataType = dataType
+    public init(modelCollection: ModelCollection?, delegate: AnyObject? = nil) {
+        self.modelCollection = modelCollection
         self.delegate = delegate
     }
     
@@ -99,12 +99,12 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
      Initialise with a a single type object.
      
      - Parameters:
-     - dataType: DataType
+        - modelCollection: ModelCollection
      
-     - SeeAlso: `Type`
+     - SeeAlso: `Model`
      */
     public init(model: Model) {
-        self.type = model
+        self.model = model
     }
     
     /// Unavalible
@@ -118,16 +118,16 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
     // MARK: Public functions
     
     /**
-     update current dataSource with dataType.
-     >Note: If data type is a `class`, it is not reqruied to update the dataType.
+     update current dataSource with modelCollection.
+     >Note: If data type is a `class`, it is not required to update the modelCollection.
      
      - Parameters:
-     - dataType: DataType
+        - modelCollection: ModelCollection
      
-     - SeeAlso: `Type`
+     - SeeAlso: `Model`
      */
     open func update(modelCollection: ModelCollection?) {
-        self.dataType = modelCollection
+        self.modelCollection = modelCollection
     }
     
     /// Unavalible
@@ -135,16 +135,16 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
     open func update(with dataType: DataType?) {}
     
     /**
-     update current dataSource with dataType.
-     >Note: If data type is a `class`, it is not reqruied to update the dataType.
+     update current dataSource with modelCollection.
+     >Note: If model is a `class`, it is not required to update the modelCollection.
      
      - Parameters:
-     - dataType: Type
+        - model: Model
      
-     - SeeAlso: `DataType`
+     - SeeAlso: `ModelCollection`
      */
     open func update(model: Model?) {
-        self.type = model
+        self.model = model
     }
     
     /// Unavalible
@@ -155,13 +155,13 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
     
     /// :nodoc:
     open func numberOfSections(in tableView: UITableView) -> Int {
-        switch (dataType, type) {
+        switch (modelCollection, model) {
         case (.some, .none):
-            return dataType?.numberOfSections ?? 0
+            return modelCollection?.numberOfSections ?? 0
         case (.none, .some):
             return 1
         case (.some, .some):
-            fatalError("\(String(describing: Swift.type(of: self))) should not have dataType and dataType at the same time.")
+            fatalError("\(String(describing: Swift.type(of: self))) should not have modelCollection and model at the same time.")
         default:
             return 0
         }
@@ -169,12 +169,12 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
     
     /// :nodoc:
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataType?[section].numberOfItems ?? (dataType == nil ? 0 : 1)
+        return modelCollection?[section].numberOfItems ?? (model == nil ? 0 : 1)
     }
     
     /// :nodoc:
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cellType = dataType?.cellType(forItemAt: indexPath) as? UITableViewCell.Type else { fatalError("You need to subclass Stanwood.Elements and override cellType(forItemAt:)") }
+        guard let cellType = modelCollection?.cellType(forItemAt: indexPath) as? UITableViewCell.Type else { fatalError("You need to subclass Stanwood.Elements and override cellType(forItemAt:)") }
         guard let cell = tableView.dequeue(cellType: cellType, for: indexPath) as? (UITableViewCell & Fillable) else { fatalError("UITableViewCell must conform to Fillable protocol") }
         
         if let delegateableCell = cell as? Delegateble {
@@ -182,11 +182,11 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
             if let delegate = delegate {
                 delegateableCell.set(delegate: delegate)
             } else {
-                assert(false, "The cell requires a delegate, you must inject a delegate to proceed. See: init(dataType:delegate:)")
+                assert(false, "The cell requires a delegate, you must inject a delegate to proceed. See: init(modelCollection:delegate:)")
             }
         }
         
-        cell.fill(with: dataType?[indexPath.section][indexPath])
+        cell.fill(with: modelCollection?[indexPath.section][indexPath])
         return cell
     }
 }

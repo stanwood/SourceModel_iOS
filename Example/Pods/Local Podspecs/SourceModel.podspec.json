@@ -15,7 +15,7 @@
     "git": "https://github.com/SourceModel_iOS/SourceModel_iOS.git",
     "tag": "1.0"
   },
-  "swift_version": "5.0",
+  "swift_versions": "5.0",
   "platforms": {
     "ios": "10.0"
   },
@@ -27,5 +27,6 @@
   "source_files": [
     "SourceModel/Core/**/*",
     "SourceModel/Protocols/**/*"
-  ]
+  ],
+  "swift_version": "5.0"
 }

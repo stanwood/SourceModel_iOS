@@ -3,7 +3,7 @@
 //
 //  The MIT License (MIT)
 //
-//  Copyright (c) 2018 Stanwood GmbH (www.stanwood.io)
+//  Copyright (c) 2019 Stanwood GmbH (www.stanwood.io)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,8 @@ import UIKit
 
 protocol CollectionDelegating {
     
-    var dataType: ModelCollection? { get set }
-    var type: Model? { get set }
+    var modelCollection: ModelCollection? { get set }
+    var model: Model? { get set }
     
     func update(modelCollection: ModelCollection?)
     func update(model: Model?)
@@ -40,35 +40,35 @@ protocol CollectionDelegating {
  
  #####Example: DataSource and Delegate design#####
  ````swift
- let items = [Element(id: "1"), Element(id: "2")]
- self.objects = Stanwood.Elements<Element>(items: items)
+ let items = [Model(id: "1"), Model(id: "2")]
+ let modelCollection = Stanwood.Elements<Model>(items: items)
  
- self.dataSource = ElementDataSource(dataObject: objects)
- self.delegate = ElementDelegate(dataObject: objects)
+ let dataSource = ModelDataSource(dataObject: modelCollection)
+ let delegate = ModelDelegate(dataObject: modelCollection)
  
- self.collectionView.dataSource = self.dataSource
- self.collectionView.delegate = self.delegate
- ````
+ self.collectionView.dataSource = dataSource
+ self.collectionView.delegate = delegate
+ ```
  
  - SeeAlso:
  
- `AbstractCollectionDataSource`
+ `CollectionDataSource`
  
- `Objects`
+ `Elements`
  
  `ModelCollection`
  
- `Type`
+ `Model`
  */
 open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, CollectionDelegating, DelegateSourceType {
     
     // MARK: Properties
     
     /// dataObject, a collection of types
-    public internal(set) var dataType:ModelCollection?
+    public internal(set) var modelCollection: ModelCollection?
     
-    /// A single type object to present
-    public internal(set) var type: Model?
+    /// A single model object to present
+    public internal(set) var model: Model?
     
     // MARK: Initializers
     
@@ -76,28 +76,28 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
      Initialise with a collection of types
      
      - Parameters:
-     - dataObject: dataObject
+     - modelCollection: modelCollection
      
-     - SeeAlso: `ModelCollection`
+     - SeeAlso: `Model`
      */
     public init(modelCollection: ModelCollection?) {
-        self.dataType = modelCollection
+        self.modelCollection = modelCollection
     }
     
     /// Unavalible
-    @available(*, unavailable, renamed: "init(model:)")
+    @available(*, unavailable, renamed: "init(modelCollection:)")
     public init(dataType: DataType?) {}
     
     /**
-     Initialise with a a single type object.
+     Initialise with a single model object.
      
      - Parameters:
-     - dataType: DataType
+        - model: Model
      
-     - SeeAlso: `Type`
+     - SeeAlso: `ModelCollection`
      */
     public init(model: Model) {
-        self.type = model
+        self.model = model
     }
     
     /// Unavalible
@@ -112,15 +112,15 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
     
     /**
      update current dataSource with dataObject.
-     >Note: If data type is a `class`, it is not reqruied to update the dataType.
+     >Note: If dataModel is a `class`, it is not required to update the dataModel.
      
      - Parameters:
-     - dataObject: DataType
+        - modelCollection: ModelCollection
      
-     - SeeAlso: `Type`
+     - SeeAlso: `Model`
      */
     open func update(modelCollection: ModelCollection?) {
-        self.dataType = modelCollection
+        self.modelCollection = modelCollection
     }
     
     /// Unavalible
@@ -128,16 +128,16 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
     open func update(with dataType: DataType?) {}
     
     /**
-     update current dataSource with dataType.
-     >Note: If data type is a `class`, it is not reqruied to update the dataType.
+     update current dataSource with modelCollection.
+     >Note: If data type is a `class`, it is not required to update the modelCollection.
      
      - Parameters:
-     - dataType: Type
+        - model: Model
      
-     - SeeAlso: `DataType`
+     - SeeAlso: `ModelCollection`
      */
     open func update(model: Model?) {
-        self.type = model
+        self.model = model
     }
     
     /// Unavalible
@@ -146,7 +146,7 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
     
     /// :nodoc:
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if let headerable = dataType?[section] as? Headerable,
+        if let headerable = modelCollection?[section] as? Headerable,
             let view = headerable.reusableView {
             return view.bounds.size
         }

@@ -3,7 +3,7 @@
 //
 //  The MIT License (MIT)
 //
-//  Copyright (c) 2018 Stanwood GmbH (www.stanwood.io)
+//  Copyright (c) 2019 Stanwood GmbH (www.stanwood.io)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,8 @@ import UIKit
 
 protocol TableDelegating {
     
-    var dataType: ModelCollection? { get set }
-    var type: Model? { get set }
+    var modelCollection: ModelCollection? { get set }
+    var model: Model? { get set }
     
     func update(modelCollection: ModelCollection?)
     func update(model: Model?)
@@ -40,35 +40,35 @@ protocol TableDelegating {
  
  #####Example: DataSource and Delegate design#####
  ````swift
- let items = [Element(id: "1"), Element(id: "2")]
- self.objects = Stanwood.Elements<Element>(items: items)
+ let items = [Model(id: "1"), Model(id: "2")]
+ let modelCollection = Stanwood.Elements<Model>(items: items)
  
- self.dataSource = ElementDataSource(dataType: objects)
- self.delegate = ElementDelegate(dataType: objects)
+ let dataSource = ModelDataSource(dataObject: modelCollection)
+ let delegate = ModelDelegate(dataObject: modelCollection)
  
- self.tableView.dataSource = self.dataSource
- self.tableView.delegate = self.delegate
- ````
+ self.tableView.dataSource = dataSource
+ self.tableView.delegate = delegate
+ ```
  
  - SeeAlso:
  
  `TableDataSource`
  
- `Objects`
+ `Elements`
  
- `DataType`
+ `ModelCollection`
  
- `Type`
+ `Model`
  */
 open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, DelegateSourceType {
     
     // MARK: Properties
     
-    /// dataType, a collection of types
-    public internal(set) var dataType: ModelCollection?
+    /// modelCollection, a collection of types
+    public internal(set) var modelCollection: ModelCollection?
     
-    /// A single type object to present
-    public internal(set) var type: Model?
+    /// A single model object to present
+    public internal(set) var model: Model?
 
     // MARK: Initializers
     
@@ -76,12 +76,12 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
      Initialise with a collection of types
      
      - Parameters:
-     - dataType: dataType
+        - modelCollection: ModelCollection
      
-     - SeeAlso: `DataType`
+     - SeeAlso: `Model`
      */
     public init(modelCollection: ModelCollection?) {
-        self.dataType = modelCollection
+        self.modelCollection = modelCollection
     }
     
     /// Unavalible
@@ -92,12 +92,12 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
      Initialise with a a single type object.
      
      - Parameters:
-     - dataType: DataType
+        - model: Model
      
-     - SeeAlso: `Type`
+     - SeeAlso: `ModelCollection`
      */
     public init(model: Model) {
-        self.type = model
+        self.model = model
     }
     
     /// Unavalible
@@ -107,16 +107,16 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
     // MARK: Public functions
     
     /**
-     update current dataSource with dataType.
-     >Note: If data type is a `class`, it is not reqruied to update the dataType.
+     Update current dataSource with modelCollection.
+     >Note: If modelCollection is a `class`, it is not required to update the modelCollection.
      
      - Parameters:
-     - dataType: DataType
+        - modelCollection: ModelCollection
      
-     - SeeAlso: `Type`
+     - SeeAlso: `Model`
      */
     open func update(modelCollection: ModelCollection?) {
-        self.dataType = modelCollection
+        self.modelCollection = modelCollection
     }
     
     @available(*, unavailable, renamed: "update(modelCollection:)")
@@ -124,15 +124,15 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
     
     /**
      update current dataSource with dataType.
-     >Note: If data type is a `class`, it is not reqruied to update the dataType.
+     >Note: If model is a `class`, it is not required to update the model.
      
      - Parameters:
-     - dataType: Type
+        - model: Model
      
-     - SeeAlso: `DataType`
+     - SeeAlso: `ModelCollection`
      */
     open func update(model: Model?) {
-        self.type = model
+        self.model = model
     }
     
     @available(*, unavailable, renamed: "update(model:)")
@@ -140,7 +140,7 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
     
     /// :nodoc:
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let headerable = dataType?[section] as? Headerable,
+        if let headerable = modelCollection?[section] as? Headerable,
             let view = headerable.headerView {
             return view.bounds.size.height
         }
@@ -149,7 +149,7 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
     
     /// :nodoc:
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let headerable = dataType?[section] as? Headerable {
+        if let headerable = modelCollection?[section] as? Headerable {
             return headerable.headerView
         }
         return nil
