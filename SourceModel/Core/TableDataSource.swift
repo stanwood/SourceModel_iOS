@@ -76,8 +76,12 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
     /// A single model object to present
     public internal(set) var model: Model?
     
-    /// :nodoc:
-    private weak var delegate: AnyObject?
+    /**
+     DataSource Cell Delegate
+     
+     - SeeAlso `Delegatable`
+     */
+    public private(set) weak var delegate: AnyObject?
     
     // MARK: Initializers
     

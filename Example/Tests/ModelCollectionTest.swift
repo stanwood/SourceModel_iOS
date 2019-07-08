@@ -7,12 +7,12 @@
 //
 
 import XCTest
-import StanwoodCore
+import SourceModel
 
 class ModelCollectionTest: XCTestCase {
     
-    var modelCollection: Stanwood.Elements<Item>!
-    var sections: Stanwood.Sections!
+    var modelCollection: Elements<Item>!
+    var sections: Sections!
     
     override func setUp() {
         super.setUp()
@@ -52,14 +52,14 @@ class ModelCollectionTest: XCTestCase {
         let allFloats = MainItem(items: floats)
         let allStrings = MainItem(items: strings)
         
-        sections = Stanwood.Sections(items: [allFloats, allStrings])
+        sections = Sections(items: [allFloats, allStrings])
 
-        let sectionOne = Stanwood.Elements(items: floats)
+        let sectionOne = Elements(items: floats)
         modelCollection = sectionOne
 
-        let sectionTwo = Stanwood.Elements(items: strings)
-        sections =  Stanwood.Sections(items: [sectionOne, sectionTwo])
-
+        let sectionTwo = Elements(items: strings)
+        sections =  Sections(items: [sectionOne, sectionTwo])
+    
         continueAfterFailure = true
     }
     
@@ -68,7 +68,7 @@ class ModelCollectionTest: XCTestCase {
         super.tearDown()
     }
     
-    // MARK: - Test Stanwood.Sections
+    // MARK: - Test Sections
     
     func testSectionCount() {
         let count = 2
@@ -101,7 +101,7 @@ class ModelCollectionTest: XCTestCase {
         XCTAssertEqual(item.subTitle, subTitle)
     }
     
-    // MARK: - Test Stanwood.Elements
+    // MARK: - Test Elements
     
     func testCount() {
         let count = 16
@@ -118,7 +118,7 @@ class ModelCollectionTest: XCTestCase {
     
     func testContains() {
         let object = Item(title: "Test", subTitle: "Item", signature: "Aaron", value: "Is Likely Better Than Great")
-        let objects: Stanwood.Elements<Item> = self.modelCollection
+        let objects: Elements<Item> = self.modelCollection
         
         XCTAssertFalse(objects.contains(object))
         
@@ -128,7 +128,7 @@ class ModelCollectionTest: XCTestCase {
     }
     
     func testMoveLow() {
-        let objects: Stanwood.Elements<Item> = self.modelCollection
+        let objects: Elements<Item> = self.modelCollection
         let indexPath = IndexPath(item: 2, section: 0)
         let objectThree = objects[indexPath] as! Item
         let movedToIndexPath = IndexPath(item: 7, section: 0)
@@ -141,7 +141,7 @@ class ModelCollectionTest: XCTestCase {
     }
     
     func testMoveHigh() {
-        let elements: Stanwood.Elements<Item> = Stanwood.Elements<Item>(items:  self.modelCollection.items)
+        let elements: Elements<Item> = Elements<Item>(items:  self.modelCollection.items)
         let indexPath = IndexPath(item: 12, section: 0)
         let objectThree = modelCollection[indexPath] as! Item
         let movedToIndexPath = IndexPath(item: 7, section: 0)
@@ -154,7 +154,7 @@ class ModelCollectionTest: XCTestCase {
     }
     
     func testMoveEnd() {
-        let elements: Stanwood.Elements<Item> = Stanwood.Elements<Item>(items:  self.modelCollection.items)
+        let elements: Elements<Item> = Elements<Item>(items:  self.modelCollection.items)
         let indexPath = IndexPath(item: 7, section: 0)
         let objectThree = modelCollection[indexPath] as! Item
         let movedToIndexPath = IndexPath(item: 13, section: 0)
@@ -168,7 +168,7 @@ class ModelCollectionTest: XCTestCase {
     
     func testDelete() {
         
-        let objects: Stanwood.Elements<Item> = self.modelCollection
+        let objects: Elements<Item> = self.modelCollection
         let indexPath = IndexPath(item: 2, section: 0)
         let objectThree = objects[indexPath] as! Item
         
@@ -192,7 +192,7 @@ class ModelCollectionTest: XCTestCase {
         do {
             try modelCollection.save()
             
-            let loadedDeals = Stanwood.Elements<Item>.loadFromFile()
+            let loadedDeals = Elements<Item>.loadFromFile()
             XCTAssertNotNil(loadedDeals)
             
             if let loadedDeals = loadedDeals {
@@ -205,7 +205,7 @@ class ModelCollectionTest: XCTestCase {
                 
                 try loadedDeals.save(withFileName: "objects_file")
                 
-                let objectsFile = Stanwood.Elements<Item>.loadFromFile(withFileName: "objects_file")
+                let objectsFile = Elements<Item>.loadFromFile(withFileName: "objects_file")
                 XCTAssertNotNil(objectsFile)
                 
                 if let objectsFile = objectsFile {

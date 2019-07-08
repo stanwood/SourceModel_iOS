@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import StanwoodCore
+import SourceModel
 
 struct Item: Typeable, Codable {
     
@@ -17,7 +17,7 @@ struct Item: Typeable, Codable {
     var value: String?
 }
 
-class MainItem: Stanwood.Elements<Item> {
+class MainItem: Elements<Item> {
 
 }
 

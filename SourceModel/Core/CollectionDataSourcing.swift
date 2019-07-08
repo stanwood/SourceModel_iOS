@@ -84,8 +84,12 @@ open class CollectionDataSource: NSObject, UICollectionViewDataSource, Collectio
     @available(*, unavailable, renamed: "model")
     public internal(set) var type: Model?
     
-    /// :nodoc:
-    private weak var delegate: AnyObject?
+    /**
+     DataSource Cell Delegate
+     
+     - SeeAlso `Delegatable`
+    */
+    public private(set) weak var delegate: AnyObject?
     
     // MARK: Initializers
     
