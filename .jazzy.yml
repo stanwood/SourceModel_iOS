@@ -1,0 +1,16 @@
+output: docs
+clean: true
+skip_undocumented: true
+sdk: iphone
+swift_version: 5.0.1
+module_version: 0.1.0
+xcodebuild_arguments: [clean,build,-project,_Pods.xcodeproj,-scheme,SourceModel]
+source_directory: SourceModel/Core
+author: Tal Zion
+author_url: tal.zion@stanwood.io
+copyright: 2018 Stanwood GmbH
+readme: README.md
+podspec: SourceModel.podspec
+github_url: https://github.com/stanwood/SourceModel_iOS
+min_acl: public
+theme: fullwidth
