@@ -1,9 +1,11 @@
 # SourceModel
 
-[![CI Status](https://img.shields.io/travis/talezion/SourceModel.svg?style=flat)](https://travis-ci.org/talezion/SourceModel)
-[![Version](https://img.shields.io/cocoapods/v/SourceModel.svg?style=flat)](https://cocoapods.org/pods/SourceModel)
-[![License](https://img.shields.io/cocoapods/l/SourceModel.svg?style=flat)](https://cocoapods.org/pods/SourceModel)
-[![Platform](https://img.shields.io/cocoapods/p/SourceModel.svg?style=flat)](https://cocoapods.org/pods/SourceModel)
+
+[![Swift Version](https://img.shields.io/badge/Swift-5.0.x-orange.svg)]()
+[![iOS 9+](https://img.shields.io/badge/iOS-10+-EB7943.svg)]() 
+[!
+[Maintainability](https://api.codeclimate.com/v1/badges/849b4426d8729e8e51c3/maintainability)](https://codeclimate.com/github/stanwood/SourceModel_iOS/maintainability)
+
 
 ## Example
 
