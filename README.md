@@ -22,7 +22,7 @@ pod 'SourceModel'
 
 ## Author
 
-talezion, talezion@gmail.com
+Tal Zion, tal.zion@stanwood.de
 
 ## License
 
