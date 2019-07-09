@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "StanwoodCore": [
-
+      "~> 1.5"
     ]
   },
   "source_files": [
