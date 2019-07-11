@@ -12,7 +12,7 @@
     "stanwood": "ios.frameworks@stanwood.io"
   },
   "source": {
-    "git": "https://github.com/SourceModel_iOS/SourceModel_iOS.git",
+    "git": "https://github.com/stanwood/SourceModel_iOS.git",
     "tag": "1.0"
   },
   "swift_versions": "5.0",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "StanwoodCore": [
-      "~> 1.5"
+
     ]
   },
   "source_files": [
