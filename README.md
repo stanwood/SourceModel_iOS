@@ -5,6 +5,7 @@
 [![iOS 9+](https://img.shields.io/badge/iOS-10+-EB7943.svg)]() 
 [!
 [Maintainability](https://api.codeclimate.com/v1/badges/849b4426d8729e8e51c3/maintainability)](https://codeclimate.com/github/stanwood/SourceModel_iOS/maintainability)
+[![Build Status](https://travis-ci.org/stanwood/SourceModel_iOS.svg?branch=master)](https://travis-ci.org/stanwood/SourceModel_iOS)
 
 
 ## Example
