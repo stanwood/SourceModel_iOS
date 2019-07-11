@@ -1,7 +1,7 @@
 PODS:
   - SourceModel (1.0):
-    - StanwoodCore
-  - StanwoodCore (1.5.0)
+    - StanwoodCore (= 1.5.1)
+  - StanwoodCore (1.5.1)
 
 DEPENDENCIES:
   - SourceModel (from `../`)
@@ -15,8 +15,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  SourceModel: 54233c36199549ee827ea40d33e4ef5f061f177b
-  StanwoodCore: 8f296756043d34b8679ecd2d5e4dd6cc4b3a8d78
+  SourceModel: df39ed361abb78e88d7f6c0d22e0b6190a07b933
+  StanwoodCore: d7f9828ed2fde655249d489c47591eae3e4a1464
 
 PODFILE CHECKSUM: cf83928487fad76cc26670e86a0e3a7f50994e1f
 
