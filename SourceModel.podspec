@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SourceModel'
-  s.version          = '1.1.1'
+  s.version          = '1.2'
   s.summary          = 'SourceModel design pattern'
 
   s.description      = <<-DESC
@@ -16,7 +16,6 @@ Pod::Spec.new do |s|
   
   s.swift_version = '5.0'
   s.ios.deployment_target = '10.0'
-  s.dependency 'StanwoodCore'
 
   s.source_files = [
   'SourceModel/Core/**/*',

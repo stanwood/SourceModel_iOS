@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import StanwoodCore
 import SourceModel
 
 class F: CollectionDataSource {
