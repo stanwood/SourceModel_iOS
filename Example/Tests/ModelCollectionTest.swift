@@ -40,12 +40,7 @@ class ModelCollectionTest: XCTestCase {
         ]
         
         let strings: [Item] = [
-            Item(title: "String", subTitle: "String", signature: "\"MY_LOCAL_STRING\".localized", value: "Some Pretty string"),
-            Item(title: "String", subTitle: "String", signature: "\"Some Pretty string\".first", value: "Some Pretty string".first),
-            Item(title: "String", subTitle: "String", signature: "\"Some Pretty string\".last", value: "Some Pretty string".last),
-            Item(title: "String", subTitle: "String", signature: "\"www.here.com\".httpURLString", value: "www.here.com".httpURLString),
-            Item(title: "String", subTitle: "String", signature: "\"07976876560\".phoneFormat", value: "07976876560".phoneFormat),
-            Item(title: "String", subTitle: "String", signature: "\"myNiceNameHere\".snakeCased()", value: "myNiceNameHere"),
+            Item(title: "String", subTitle: "String", signature: "\"myNiceNameHere\".snakeCased()", value: "myNiceNameHere")
             ]
     
         
@@ -76,7 +71,7 @@ class ModelCollectionTest: XCTestCase {
     }
     
     func testCountNumberOfItemsInSectionTwo() {
-        let count = 6
+        let count = 1
         XCTAssertEqual(sections[1].numberOfItems, count)
     }
     
@@ -88,7 +83,7 @@ class ModelCollectionTest: XCTestCase {
     func testLastSectionItemID() {
         let title = "String"
         
-        let indexPath = IndexPath(item: 5, section: 1)
+        let indexPath = IndexPath(item: 0, section: 1)
         let item = sections[indexPath] as! Item
         XCTAssertEqual(item.title, title)
     }

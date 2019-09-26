@@ -24,7 +24,6 @@
 //  THE SOFTWARE.
 
 import UIKit
-import StanwoodCore
 
 protocol CollectionDataSourcing: class {
     

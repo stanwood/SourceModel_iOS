@@ -1,22 +1,15 @@
 PODS:
-  - SourceModel (1.1.0):
-    - StanwoodCore (= 1.6.0)
-  - StanwoodCore (1.6)
+  - SourceModel (1.2)
 
 DEPENDENCIES:
   - SourceModel (from `../`)
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - StanwoodCore
 
 EXTERNAL SOURCES:
   SourceModel:
     :path: "../"
 
 SPEC CHECKSUMS:
-  SourceModel: 53ea040fe503c48a8d9cace5587db7e9200c8a01
-  StanwoodCore: ce5d19884a5756ee4c10983580a6ffc060b7d6df
+  SourceModel: 08957a4ee4eb94a2c10bac753af8833efa4143e7
 
 PODFILE CHECKSUM: cf83928487fad76cc26670e86a0e3a7f50994e1f
 

@@ -24,7 +24,6 @@
 //  THE SOFTWARE.
 
 import Foundation
-import StanwoodCore
 
 /// Type, Equatable & Codeable
 public typealias Typeable = Model & Equatable
@@ -224,9 +223,9 @@ open class Elements<Element: Typeable>: ModelCollection, Codable where Element: 
         - fileName: The file name. If nil, default value String(describing: Elements<Element>.self)`
         - directory: The directory to save the file.
      */
-    open func save(withFileName fileName: String? = nil, directory: Stanwood.Storage.Directory = .documents(customDirectory: nil)) throws {
+    open func save(withFileName fileName: String? = nil, directory: Storage.Directory = .documents(customDirectory: nil)) throws {
         
-        try Stanwood.Storage.store(self, to: directory, as: .json, withName: fileName ?? Elements<Element>.identifier)
+        try Storage.store(self, to: directory, as: .json, withName: fileName ?? Elements<Element>.identifier)
     }
     
     /**
@@ -236,9 +235,9 @@ open class Elements<Element: Typeable>: ModelCollection, Codable where Element: 
         - fileName: The file name. If nil, default value String(describing: Elements<T>.self)`
         - directory: The directory to save the file.
      */
-    public static func loadFromFile(withFileName fileName: String? = nil, directory: Stanwood.Storage.Directory = .documents(customDirectory: nil)) -> Elements? {
+    public static func loadFromFile(withFileName fileName: String? = nil, directory: Storage.Directory = .documents(customDirectory: nil)) -> Elements? {
         do {
-            return try Stanwood.Storage.retrieve(fileName ?? Elements<Element>.identifier, of: .json, from: directory, as: Elements<Element>.self)
+            return try Storage.retrieve(fileName ?? Elements<Element>.identifier, of: .json, from: directory, as: Elements<Element>.self)
         } catch {
             return nil
         }
