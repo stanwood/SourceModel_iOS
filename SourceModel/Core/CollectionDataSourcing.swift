@@ -28,10 +28,8 @@ import UIKit
 protocol CollectionDataSourcing: class {
     
     var modelCollection: ModelCollection? { get set }
-    var model: Model? { get set }
     
     func update(modelCollection: ModelCollection?)
-    func update(model: Model?)
     
     func numberOfSections(in collectionView: UICollectionView) -> Int
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
@@ -39,14 +37,14 @@ protocol CollectionDataSourcing: class {
 }
 
 /**
- The `CollectionDataSource` conforms to the `CollectionDataSourcing` protocol and implements `CollectionDataSource.numberOfSections(in:)` and `CollectionDataSource.collectionView(_:numberOfItemsInSection:)`. It midiates the application data model `DataModel` and `Model` for the [`UICollectionView`](https://developer.apple.com/documentation/uikit/uicollectionview).
+ The `CollectionDataSource` conforms to the `CollectionDataSourcing` protocol and implements `CollectionDataSource.numberOfSections(in:)` and `CollectionDataSource.collectionView(_:numberOfItemsInSection:)`. It midiates the application data model `ModelCollection` and `Model` for the [`UICollectionView`](https://developer.apple.com/documentation/uikit/uicollectionview).
  
  >It is requried to subclass `CollectionDataSource` and override `CollectionDataSource.collectionView(_:cellForItemAt:)`
  
  #####Example: DataSource and Delegate design#####
  ````swift
  let items = [Model(id: "1"), Model(id: "2")]
- let modelCollection = Stanwood.Elements<Model>(items: items)
+ let modelCollection = Elements<Model>(items: items)
  
  let dataSource = ModelDataSource(dataObject: modelCollection)
  let delegate = ModelDelegate(dataObject: modelCollection)
@@ -61,33 +59,29 @@ protocol CollectionDataSourcing: class {
  
  `Elements`
  
+ `Sections`
+ 
  `ModelCollection`
  
  `Model`
  */
 open class CollectionDataSource: NSObject, UICollectionViewDataSource, CollectionDataSourcing, DataSourceType {
+
     
     // MARK: Properties
     
     /// modelCollection, a collection of models
     public internal(set) var modelCollection: ModelCollection?
     
-    /// Unavalible
-    @available(*, unavailable, renamed: "modelCollection")
-    public internal(set) var dataType: ModelCollection?
-    
-    /// A single model to present
+    /// :nodoc:
+    @available(*, unavailable)
     public internal(set) var model: Model?
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "model")
-    public internal(set) var type: Model?
     
     /**
      DataSource Cell Delegate
      
      - SeeAlso `Delegatable`
-    */
+     */
     public private(set) weak var delegate: AnyObject?
     
     // MARK: Initializers
@@ -96,37 +90,36 @@ open class CollectionDataSource: NSObject, UICollectionViewDataSource, Collectio
      Initialise with a collection of types
      
      - Parameters:
-         - modelCollection: `ModelCollection`
-         - delegate: optional AnyObject delegate
+         - modelCollection: ModelCollection
+         - delegate: Optional AnyObject delegate
      
-     - SeeAlso: `Model`
+     - SeeAlso: `DataType`
      */
     public init(modelCollection: ModelCollection?, delegate: AnyObject? = nil) {
-        self.delegate = delegate
         self.modelCollection = modelCollection
+        self.delegate = delegate
     }
     
     /**
      Initialise with a a single type object.
      
      - Parameters:
-     - model: `Model`
+        - modelCollection: ModelCollection
      
-     - SeeAlso: `ModelCollection`
+     - SeeAlso: `Model`
      */
-    public init(model: Model, delegate: AnyObject? = nil) {
-        self.model = model
-    }
+    /// :nodoc:
+    @available(*, unavailable)
+    public init(model: Model) {}
     
     // MARK: Public functions
     
     /**
-     Update current dataSource with dataObject.
-     
+     Update current dataSource with modelCollection.
      >Note: If modelCollection is a `class`, it is not required to update the modelCollection.
      
      - Parameters:
-        - modelCollection: `ModelCollection`
+        - modelCollection: ModelCollection
      
      - SeeAlso: `Model`
      */
@@ -134,51 +127,25 @@ open class CollectionDataSource: NSObject, UICollectionViewDataSource, Collectio
         self.modelCollection = modelCollection
     }
     
-    /// Unavalible
-    @available(*, unavailable, renamed: "update(modelCollection:)")
-    open func update(with dataType: ModelCollection?) {}
-    
-    /**
-     update current dataSource with type.
-     >Note: If model is a `class`, it is not required to update the model.
-     
-     - Parameters:
-        - model: `Model`
-     
-     - SeeAlso: `ModelCollection`
-     */
-    open func update(model: Model?) {
-        self.model = model
-    }
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "update(model:)")
-    open func update(with type: Type?) {}
-    
-    // MARK: UICollectionViewDataSource functions
+        /// :nodoc:
+    @available(*, unavailable)
+    open func update(model: Model?) { }
+
+    // MARK: UITableViewDataSource functions
     
     /// :nodoc:
-    open func numberOfSections(in collectionView: UICollectionView) -> Int {
-        switch (modelCollection, model) {
-        case (.some, .none):
-            return modelCollection?.numberOfSections ?? 0
-        case (.none, .some):
-            return 1
-        case (.some, .some):
-            fatalError("\(String(describing: Swift.type(of: self))) should not have model and modelCollection at the same time.")
-        default:
-            return 0
-        }
+    open func numberOfSections(in tableView: UICollectionView) -> Int {
+        modelCollection?.numberOfSections ?? 0
     }
     
     /// :nodoc:
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return modelCollection?[section].numberOfItems ?? (model == nil ? 0 : 1)
+        return modelCollection?[section].numberOfItems ?? 0
     }
     
     /// :nodoc:
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cellType = modelCollection?.cellType(forItemAt: indexPath) as? UICollectionViewCell.Type else { fatalError("You need to subclass Stanwood.Elements and override cellType(forItemAt:)") }
+        guard let cellType = modelCollection?.cellType(forItemAt: indexPath) as? UICollectionViewCell.Type else { fatalError("You need to subclass Elements and override cellType(forItemAt:)") }
         guard let cell = collectionView.dequeue(cellType: cellType, for: indexPath) as? (UICollectionViewCell & Fillable) else { fatalError("UICollectionViewCell must conform to Fillable protocol") }
         if let delegateableCell = cell as? Delegateble {
             
@@ -188,6 +155,11 @@ open class CollectionDataSource: NSObject, UICollectionViewDataSource, Collectio
                 assert(false, "The cell requires a delegate, you must inject a delegate to proceed. See: init(modelCollection:delegate:)")
             }
         }
+        
+        if let indexableCell = cell as? Indexable {
+            indexableCell.inject(indexPath)
+        }
+        
         cell.fill(with: modelCollection?[indexPath.section][indexPath])
         return cell
     }

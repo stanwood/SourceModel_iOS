@@ -35,10 +35,10 @@ import Foundation
  let itemsOne = [Deal(id: "1"), Deal(id: "2")]
  let itemsTwo = [Meal(id: "pizza"), Meal(id: "ham")]
  
- let sectionOnce = Stanwoon.Elements<Deal>(items: itemsOne)
- let sectionTwo = Stanwoon.Elements<Meal>(items: itemsTwo)
+ let sectionOnce = Elements<Deal>(items: itemsOne)
+ let sectionTwo = Elements<Meal>(items: itemsTwo)
  
- self.sections = Stanwood.Sections(items: [sectionOnce, sectionTwo])
+ self.sections = Sections(items: [sectionOnce, sectionTwo])
  
  self.dataSource = SectionsDataSource(dataObject: self.sections)
  self.delegate = SectionsDelegate(dataObject: self.sections)
@@ -52,8 +52,6 @@ import Foundation
  `ModelCollection`
  
  `Model`
- 
- `Modelable`
  */
 open class Sections: ModelCollection {
     

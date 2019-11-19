@@ -1,10 +1,3 @@
-//
-//  Fillable+UICollectionViewCell.swift
-//
-//  The MIT License (MIT)
-//
-//  Copyright (c) 2019 Stanwood GmbH (www.stanwood.io)
-//
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -25,18 +18,12 @@
 
 import Foundation
 
-/// :nodoc:
-public protocol ForceFillable {}
-
-extension UICollectionViewCell: ForceFillable {}
-extension UITableViewCell: ForceFillable {}
-
 /**
- Fillable protocol of type `UICollectionViewCell` used to fill cells with type object
+ Indexable protocol of type `UICollectionViewCell` and `UITableViewCell` used to inject an indexPath to a cell
  
- ##### Example: Fillable example #####
+ ##### Example: Indexable #####
  ````swift
- cell.fill(with: model)
+ cell.inject(indexPath)
  ````
  
  - SeeAlso:
@@ -44,14 +31,13 @@ extension UITableViewCell: ForceFillable {}
  `Model`
  `ModelCollection`
  */
-public protocol Fillable where Self: ForceFillable {
+public protocol Indexable where Self: ForceCollectionCell {
     
     /**
-     Fill current cell with element
+     Inject the current cell indexPath
      
      - Parameters:
-        - model: the element model
+        - indexPath: the cell's indexPath
      */
-    func fill(with model: Model?)
+    func inject(_ indexPath: IndexPath)
 }
-
