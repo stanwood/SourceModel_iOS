@@ -25,12 +25,6 @@
 
 import Foundation
 
-/// :nodoc:
-public protocol ForceDelegateble {}
-
-extension UICollectionViewCell: ForceDelegateble {}
-extension UITableViewCell: ForceDelegateble {}
-
 /**
  Delegateble protocol of type `UICollectionViewCell` || `UITableViewCell` used to set a delegate of type AnyObject
  
@@ -61,7 +55,7 @@ extension UITableViewCell: ForceDelegateble {}
     `Type`
     `DataType`
  */
-public protocol Delegateble where Self: ForceDelegateble {
+public protocol Delegateble where Self: ForceCollectionCell {
     
     /**
      Set current cell with a delegate

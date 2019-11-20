@@ -28,11 +28,8 @@ import UIKit
 protocol TableDataSourcing {
     
     var modelCollection: ModelCollection? {get set}
-    var model: Model? { get set }
     
     func update(modelCollection: ModelCollection?)
-    func update(model: Model?)
-    
     func numberOfSections(in tableView: UITableView) -> Int
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -46,7 +43,7 @@ protocol TableDataSourcing {
  #####Example: DataSource and Delegate design#####
  ````swift
  let items = [Model(id: "1"), Model(id: "2")]
- let modelCollection = Stanwood.Elements<Model>(items: items)
+ let modelCollection = Elements<Model>(items: items)
  
  let dataSource = ModelDataSource(dataObject: modelCollection)
  let delegate = ModelDelegate(dataObject: modelCollection)
@@ -61,6 +58,8 @@ protocol TableDataSourcing {
  
  `Elements`
  
+ `Sections`
+ 
  `ModelCollection`
  
  `Model`
@@ -72,7 +71,8 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
     /// modelCollection, a collection of models
     public internal(set) var modelCollection: ModelCollection?
     
-    /// A single model object to present
+    /// :nodoc:
+    @available(*, unavailable)
     public internal(set) var model: Model?
     
     /**
@@ -106,17 +106,9 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
      
      - SeeAlso: `Model`
      */
-    public init(model: Model) {
-        self.model = model
-    }
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "init(model:)")
-    public init(type: Type) {}
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "init(type:)")
-    public init(dataType: Type) {}
+    /// :nodoc:
+    @available(*, unavailable)
+    public init(model: Model) {}
     
     // MARK: Public functions
     
@@ -133,46 +125,20 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
         self.modelCollection = modelCollection
     }
     
-    /// Unavalible
-    @available(*, unavailable, renamed: "update(modelCollection:)")
-    open func update(with dataType: DataType?) {}
-    
-    /**
-     update current dataSource with modelCollection.
-     >Note: If model is a `class`, it is not required to update the modelCollection.
-     
-     - Parameters:
-        - model: Model
-     
-     - SeeAlso: `ModelCollection`
-     */
-    open func update(model: Model?) {
-        self.model = model
-    }
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "update(modelCollection:)")
-    open func update(with type: Type?) {}
-    
+        /// :nodoc:
+    @available(*, unavailable)
+    open func update(model: Model?) { }
+
     // MARK: UITableViewDataSource functions
     
     /// :nodoc:
     open func numberOfSections(in tableView: UITableView) -> Int {
-        switch (modelCollection, model) {
-        case (.some, .none):
-            return modelCollection?.numberOfSections ?? 0
-        case (.none, .some):
-            return 1
-        case (.some, .some):
-            fatalError("\(String(describing: Swift.type(of: self))) should not have modelCollection and model at the same time.")
-        default:
-            return 0
-        }
+        return modelCollection?.numberOfSections ?? 0
     }
     
     /// :nodoc:
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return modelCollection?[section].numberOfItems ?? (model == nil ? 0 : 1)
+        return modelCollection?[section].numberOfItems ?? 0
     }
     
     /// :nodoc:
@@ -187,6 +153,10 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
             } else {
                 assert(false, "The cell requires a delegate, you must inject a delegate to proceed. See: init(modelCollection:delegate:)")
             }
+        }
+        
+        if let indexableCell = cell as? Indexable {
+            indexableCell.inject(indexPath)
         }
         
         cell.fill(with: modelCollection?[indexPath.section][indexPath])
