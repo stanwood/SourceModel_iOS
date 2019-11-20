@@ -6,9 +6,9 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/849b4426d8729e8e51c3/maintainability)](https://codeclimate.com/github/stanwood/SourceModel_iOS/maintainability)
 [![Build Status](https://travis-ci.org/stanwood/SourceModel_iOS.svg?branch=master)](https://travis-ci.org/stanwood/SourceModel_iOS)
 
-**SourceModel** is a _lightweight_ wrapper for `UICollectionViewDataSource/Delegate` and `UITableViewDataSource/Delegate`. It removes the burdon of writing the boiler plate code when working with `tableViews` and `collectionViews`, allowing you to focus on what's important, populating the cells with data. 
+**SourceModel** is a _lightweight_ wrapper for `UICollectionViewDataSource/Delegate` and `UITableViewDataSource/Delegate`. It removes the burden of writing the boiler plate code when working with `tableViews` and `collectionViews`, allowing you to focus on what's important, populating the cells with data. 
 
-**SourceModdel** foucs on _Seperation of Concern_, where the cell should only be accessible to get the data to present and decide how to present it. The `dataSource` should not be responsible for deciding how the cell should populate its data, nor know about the view.  
+**SourceModdel** focus on _Seperation of Concern_, where the cell should only be accessible to get the data to present and decide how to present it. The `dataSource` should not be responsible for deciding how the cell should populate its data, nor know about the view.  
 
 ## Usage
 
@@ -145,7 +145,7 @@ class ProductsViewController: UIViewController {
 
 That's it! 😊
 
-You are probebly wondering where to go from here? Let's look at a more complex cases, and how `SourceModel` can help you.
+You are probably wondering where to go from here? Let's look at a more complex cases, and how `SourceModel` can help you.
 
 ### Working with `Sections`
 
@@ -195,7 +195,7 @@ If you want to add a section header, make sure you `ModelCollection` conforms to
     /// `UITableView` section header view
     @objc optional var headerView: UIView { get }
     
-    /// `UICollectionView` header reuseable header view
+    /// `UICollectionView` header reusable header view
     @objc optional var reusableView: UICollectionReusableView { get }
 }
 ```
@@ -312,9 +312,11 @@ class ProductCell: UICollectionViewCell, Fillable, Indexable {
 - [x] Adding support for `delegate` patter
 - [x] Adding support for `headers`
 - [x] Adding `Indexable` protocol to inject the `indexPath` into the cell
-- [ ] Adding a `reloadData` that reloads the models that changed
+- [ ] Adding a `reloadData(animated:)` that reloads the models that changed
 - [ ] Adding generics to `Fillable` protocol
-- [ ] Adding reusable `Header/Footer` view 
+- [ ] Adding reusable `Header/Footer` view
+- [ ] Adding `SwiftUI` support
+- [ ] Adding `Combine` support
 
 > Please open an issue for feature requests.
 
@@ -340,3 +342,5 @@ Tal Zion, tal.zion@stanwood.de
 ## License
 
 SourceModel is available under the MIT license. See the LICENSE file for more info.
+
+
