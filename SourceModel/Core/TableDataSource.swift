@@ -133,7 +133,7 @@ open class TableDataSource: NSObject, UITableViewDataSource, TableDataSourcing, 
     
     /// :nodoc:
     open func numberOfSections(in tableView: UITableView) -> Int {
-        modelCollection?.numberOfSections ?? 0
+        return modelCollection?.numberOfSections ?? 0
     }
     
     /// :nodoc:

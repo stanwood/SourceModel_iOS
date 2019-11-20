@@ -135,7 +135,7 @@ open class CollectionDataSource: NSObject, UICollectionViewDataSource, Collectio
     
     /// :nodoc:
     open func numberOfSections(in tableView: UICollectionView) -> Int {
-        modelCollection?.numberOfSections ?? 0
+        return modelCollection?.numberOfSections ?? 0
     }
     
     /// :nodoc:
