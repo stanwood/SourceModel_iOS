@@ -84,10 +84,6 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
         self.modelCollection = modelCollection
     }
     
-    /// Unavalible
-    @available(*, unavailable, renamed: "init(modelCollection:)")
-    public init(dataType: DataType?) {}
-    
     /**
      Initialise with a single model object.
      
@@ -99,10 +95,6 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
     public init(model: Model) {
         self.model = model
     }
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "init(model:)")
-    public init(type: Type) {}
     
     /// Unavalible
     @available(*, unavailable, renamed: "init(type:)")
@@ -123,10 +115,6 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
         self.modelCollection = modelCollection
     }
     
-    /// Unavalible
-    @available(*, unavailable, renamed: "update(modelCollection:)")
-    open func update(with dataType: DataType?) {}
-    
     /**
      update current dataSource with modelCollection.
      >Note: If data type is a `class`, it is not required to update the modelCollection.
@@ -139,10 +127,6 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
     open func update(model: Model?) {
         self.model = model
     }
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "update(model:)")
-    open func update(with type: Type?) {}
     
     /// :nodoc:
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

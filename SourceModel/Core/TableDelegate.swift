@@ -84,10 +84,6 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
         self.modelCollection = modelCollection
     }
     
-    /// Unavalible
-    @available(*, unavailable, renamed: "init(modelCollection:)")
-    public init(dataType: DataType?) {}
-    
     /**
      Initialise with a a single type object.
      
@@ -99,11 +95,7 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
     public init(model: Model) {
         self.model = model
     }
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "init(model:)")
-    public init(type: Type) {}
-    
+
     // MARK: Public functions
     
     /**
@@ -118,10 +110,7 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
     open func update(modelCollection: ModelCollection?) {
         self.modelCollection = modelCollection
     }
-    
-    @available(*, unavailable, renamed: "update(modelCollection:)")
-    open func update(with dataType: DataType?) {}
-    
+   
     /**
      update current dataSource with dataType.
      >Note: If model is a `class`, it is not required to update the model.
@@ -134,9 +123,6 @@ open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, Delega
     open func update(model: Model?) {
         self.model = model
     }
-    
-    @available(*, unavailable, renamed: "update(model:)")
-    open func update(with type: Type?) {}
     
     /// :nodoc:
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
