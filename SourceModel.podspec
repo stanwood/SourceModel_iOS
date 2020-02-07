@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SourceModel'
-  s.version          = '1.3'
+  s.version          = '1.3.1'
   s.summary          = 'SourceModel design pattern'
 
   s.description      = <<-DESC
