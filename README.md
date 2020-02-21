@@ -1,5 +1,5 @@
-# SourceModel
 
+![banner](assets/banner.png)
 
 [![Swift Version](https://img.shields.io/badge/Swift-5.0.x-orange.svg)]()
 [![iOS 9+](https://img.shields.io/badge/iOS-10+-EB7943.svg)]() 
@@ -152,7 +152,6 @@ You are probably wondering where to go from here? Let's look at a more complex c
 Working with sections can be a tedious task. You can use `ModelCollection` and inject a collection of sections (other `ModelCollection`s). Alternatively, `SourceModel` offers [Sections](/SourceModel/Sections). Let's look at our `Products` elements from before, and migrate it to sections of different product categories
 
 ```swift
-
 class ProductsViewController: UIViewController {
    
    var dataSource: CollectionDataSource! /// Use TableDataSource for UITableView
