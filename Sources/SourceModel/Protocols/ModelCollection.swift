@@ -23,6 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if os(iOS)
 import Foundation
 
 /**
@@ -56,3 +57,4 @@ public protocol ModelCollection {
     /// Returns the cell type at indexPath
     func cellType(forItemAt indexPath: IndexPath) -> Fillable.Type?
 }
+#endif

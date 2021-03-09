@@ -23,6 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if os(iOS)
 import Foundation
 import UIKit
 
@@ -137,3 +138,4 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
         return CGSize.zero
     }
 }
+#endif

@@ -23,6 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if os(iOS)
 import Foundation
 
 /**
@@ -65,3 +66,4 @@ public protocol Delegateble where Self: ForceCollectionCell {
      */
     func set(delegate: AnyObject)
 }
+#endif

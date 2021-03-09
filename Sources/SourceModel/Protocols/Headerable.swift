@@ -23,6 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if os(iOS)
 import Foundation
 
 /// Headerable protocol to add header support for `UICollectionView` and `UITableView`
@@ -34,3 +35,4 @@ import Foundation
     /// `UICollectionView` header reuseable header view
     @objc optional var reusableView: UICollectionReusableView { get }
 }
+#endif

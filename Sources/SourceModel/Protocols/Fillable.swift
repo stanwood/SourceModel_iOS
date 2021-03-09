@@ -23,6 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if os(iOS)
 import Foundation
 
 /// :nodoc:
@@ -55,3 +56,4 @@ public protocol Fillable where Self: ForceCollectionCell {
     func fill(with model: Model?)
 }
 
+#endif
