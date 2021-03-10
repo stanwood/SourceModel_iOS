@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SourceModel'
-  s.version          = '1.3.1'
+  s.version          = '1.3.2'
   s.summary          = 'SourceModel design pattern'
 
   s.description      = <<-DESC
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '10.0'
 
   s.source_files = [
-  'SourceModel/Core/**/*',
-  'SourceModel/Protocols/**/*'
+  'Sources/SourceModel/Core/**/*',
+  'Sources/SourceModel/Protocols/**/*'
   ]
 end

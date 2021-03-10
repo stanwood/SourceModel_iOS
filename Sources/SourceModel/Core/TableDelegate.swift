@@ -1,5 +1,5 @@
 //
-//  CollectionDelegate.swift
+//  TableDelegate.swift
 //
 //  The MIT License (MIT)
 //
@@ -23,10 +23,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import Foundation
+#if os(iOS)
 import UIKit
 
-protocol CollectionDelegating {
+protocol TableDelegating {
     
     var modelCollection: ModelCollection? { get set }
     var model: Model? { get set }
@@ -35,8 +35,9 @@ protocol CollectionDelegating {
     func update(model: Model?)
 }
 
+
 /**
- The `CollectionDelegate` conforms to the `CollectionDelegating` protocol. It allows you to manage the selection and highlighting of items in a collection view and to perform actions on those items. [`UICollectionView`](https://developer.apple.com/documentation/uikit/uicollectionview).
+ The `TableDelegate` conforms to the `TableDelegating` protocol. It allows you to manage the selection and highlighting of items in a collection view and to perform actions on those items. [`UITableView`](https://developer.apple.com/documentation/uikit/uitableview).
  
  #####Example: DataSource and Delegate design#####
  ````swift
@@ -46,13 +47,13 @@ protocol CollectionDelegating {
  let dataSource = ModelDataSource(dataObject: modelCollection)
  let delegate = ModelDelegate(dataObject: modelCollection)
  
- self.collectionView.dataSource = dataSource
- self.collectionView.delegate = delegate
+ self.tableView.dataSource = dataSource
+ self.tableView.delegate = delegate
  ```
  
  - SeeAlso:
  
- `CollectionDataSource`
+ `TableDataSource`
  
  `Elements`
  
@@ -60,23 +61,23 @@ protocol CollectionDelegating {
  
  `Model`
  */
-open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, CollectionDelegating, DelegateSourceType {
+open class TableDelegate: NSObject, UITableViewDelegate, TableDelegating, DelegateSourceType {
     
     // MARK: Properties
     
-    /// dataObject, a collection of types
+    /// modelCollection, a collection of types
     public internal(set) var modelCollection: ModelCollection?
     
     /// A single model object to present
     public internal(set) var model: Model?
-    
+
     // MARK: Initializers
     
     /**
      Initialise with a collection of types
      
      - Parameters:
-     - modelCollection: modelCollection
+        - modelCollection: ModelCollection
      
      - SeeAlso: `Model`
      */
@@ -85,7 +86,7 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
     }
     
     /**
-     Initialise with a single model object.
+     Initialise with a a single type object.
      
      - Parameters:
         - model: Model
@@ -95,16 +96,12 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
     public init(model: Model) {
         self.model = model
     }
-    
-    /// Unavalible
-    @available(*, unavailable, renamed: "init(type:)")
-    public init(dataType: Model) {}
-    
+
     // MARK: Public functions
     
     /**
-     update current dataSource with dataObject.
-     >Note: If dataModel is a `class`, it is not required to update the dataModel.
+     Update current dataSource with modelCollection.
+     >Note: If modelCollection is a `class`, it is not required to update the modelCollection.
      
      - Parameters:
         - modelCollection: ModelCollection
@@ -114,10 +111,10 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
     open func update(modelCollection: ModelCollection?) {
         self.modelCollection = modelCollection
     }
-    
+   
     /**
-     update current dataSource with modelCollection.
-     >Note: If data type is a `class`, it is not required to update the modelCollection.
+     update current dataSource with dataType.
+     >Note: If model is a `class`, it is not required to update the model.
      
      - Parameters:
         - model: Model
@@ -129,11 +126,20 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionV
     }
     
     /// :nodoc:
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let headerable = modelCollection?[section] as? Headerable,
-            let view = headerable.reusableView {
-            return view.bounds.size
+            let view = headerable.headerView {
+            return view.bounds.size.height
         }
-        return CGSize.zero
+        return 0.0
+    }
+    
+    /// :nodoc:
+    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if let headerable = modelCollection?[section] as? Headerable {
+            return headerable.headerView
+        }
+        return nil
     }
 }
+#endif

@@ -1,10 +1,3 @@
-//
-//  Headerable.swift
-//
-//  The MIT License (MIT)
-//
-//  Copyright (c) 2019 Stanwood GmbH (www.stanwood.io)
-//
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -23,14 +16,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if os(iOS)
 import Foundation
 
-/// Headerable protocol to add header support for `UICollectionView` and `UITableView`
-@objc public protocol Headerable {
+/**
+ Indexable protocol of type `UICollectionViewCell` and `UITableViewCell` used to inject an indexPath to a cell
+ 
+ ##### Example: Indexable #####
+ ````swift
+ cell.inject(indexPath)
+ ````
+ 
+ - SeeAlso:
+ 
+ `Model`
+ `ModelCollection`
+ */
+public protocol Indexable where Self: ForceCollectionCell {
     
-    /// `UITableView` section header view
-    @objc optional var headerView: UIView { get }
-    
-    /// `UICollectionView` header reuseable header view
-    @objc optional var reusableView: UICollectionReusableView { get }
+    /**
+     Inject the current cell indexPath
+     
+     - Parameters:
+        - indexPath: the cell's indexPath
+     */
+    func inject(_ indexPath: IndexPath)
 }
+#endif

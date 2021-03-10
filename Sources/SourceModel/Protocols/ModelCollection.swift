@@ -1,5 +1,5 @@
 //
-//  Delegateble.swift
+//  ModelCollection.swift
 //
 //  The MIT License (MIT)
 //
@@ -23,45 +23,38 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if os(iOS)
 import Foundation
 
 /**
- Delegateble protocol of type `UICollectionViewCell` || `UITableViewCell` used to set a delegate of type AnyObject
- 
- #####Example: Delegetable example#####
- ````swift
- protocol ModuleCellOneDelegate: class {
-    func didTapEvent()
- }
- 
- protocol ModuleCellTwoDelegate: class {
-    func didTapEvent()
- }
- 
- protocol ModuleCellsDelegate: ModuleCellOneDelegate, ModuleCellTwoDelegate {}
-
- class ModuleViewController: UIViewController, ModuleCellsDelegate {}
- 
- class Cell: UICollectionViewCell: Delegetable {
- 
-    .....
- 
-    cell.set(delegate: self) {}
- }
- ````
+ Type is a single object withing a collection of types
  
  - SeeAlso:
- 
-    `Type`
-    `DataType`
+    `ModelCollection`
  */
-public protocol Delegateble where Self: ForceCollectionCell {
+public protocol Model {}
+
+/**
+ DataType is an object that stores a collection of types.
+ 
+ - SeeAlso:
+    `Model`
+ */
+public protocol ModelCollection {
     
-    /**
-     Set current cell with a delegate
-     
-     - Parameters:
-        - delegate: the delegate class
-     */
-    func set(delegate: AnyObject)
+    /// Returns the number of items
+    var numberOfItems: Int { get }
+    
+    /// Returns the number of sections
+    var numberOfSections: Int { get }
+    
+    /// A subscript to return a type in an indexPath
+    subscript(indexPath: IndexPath) -> Model? { get }
+    
+    /// A subscript to return a collection dataType within a section
+    subscript(section: Int) -> ModelCollection { get }
+    
+    /// Returns the cell type at indexPath
+    func cellType(forItemAt indexPath: IndexPath) -> Fillable.Type?
 }
+#endif

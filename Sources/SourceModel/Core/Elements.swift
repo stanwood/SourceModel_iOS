@@ -23,6 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if os(iOS)
 import Foundation
 
 /// Type, Equatable & Codeable
@@ -243,4 +244,4 @@ open class Elements<Element: Typeable>: ModelCollection, Codable where Element: 
         }
     }
 }
-
+#endif

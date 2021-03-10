@@ -101,7 +101,7 @@ public class Storage {
     public static func store<T: Encodable>(_ object: T, to directory: Directory, as fileType: FileType, withName fileName: String) throws {
         let urlComponents = try getURLComponents(for: directory)
         
-        var url = urlComponents.url.appendingPathComponent(fileName + ".\(fileType.rawValue)", isDirectory: false)
+        let url = urlComponents.url.appendingPathComponent(fileName + ".\(fileType.rawValue)", isDirectory: false)
         
         let encoder = JSONEncoder()
         do {
@@ -134,7 +134,7 @@ public class Storage {
      */
     public static func retrieve<T: Decodable>(_ fileName: String, of fileType: FileType, from directory: Directory, as type: T.Type) throws -> T? {
         let urlComponents = try getURLComponents(for: directory)
-        var url = urlComponents.url.appendingPathComponent(fileName + ".\(fileType.rawValue)", isDirectory: false)
+        let url = urlComponents.url.appendingPathComponent(fileName + ".\(fileType.rawValue)", isDirectory: false)
         
         if !FileManager.default.fileExists(atPath: url.path) {
             return nil
