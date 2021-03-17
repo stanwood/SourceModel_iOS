@@ -25,6 +25,7 @@
 
 #if os(iOS)
 import UIKit
+import UIKit
 
 protocol TableDelegating {
     

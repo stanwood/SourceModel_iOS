@@ -24,6 +24,7 @@
 //  THE SOFTWARE.
 
 #if os(iOS)
+import UIKit
 import Foundation
 
 /// Headerable protocol to add header support for `UICollectionView` and `UITableView`
